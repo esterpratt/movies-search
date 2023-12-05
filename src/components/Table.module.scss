@@ -19,5 +19,8 @@
 
   td {
     border: 1px solid $border;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
