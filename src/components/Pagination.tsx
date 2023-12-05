@@ -33,7 +33,9 @@ function Pagination(props: PaginationProps) {
   return (
     <div className={styles.pagination}>
       <div className={styles.pageNums}>{pageNums}</div>
-      <p>{length} Total pages</p>
+      <p>
+        {length} Total page{length !== 1 ? 's' : ''}
+      </p>
     </div>
   );
 }
