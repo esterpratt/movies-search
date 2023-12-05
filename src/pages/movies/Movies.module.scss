@@ -6,8 +6,6 @@
 .tableContainer {
   display: flex;
   flex-direction: column;
-  height: 600px;
-  justify-content: space-between;
   width: 60%;
 
   @media (max-width: 768px) {
