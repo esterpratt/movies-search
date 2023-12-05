@@ -1,0 +1,22 @@
+.searchText {
+  margin-top: 32px;
+  margin-bottom: 24px;
+}
+
+.table {
+  margin: 24px 0;
+
+  th:first-child {
+    width: 80%;
+  }
+}
+
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}

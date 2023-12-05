@@ -1,0 +1,15 @@
+.pagination {
+  text-align: center;
+}
+
+.pageNums {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.paginationButton {
+  height: 32px;
+  padding: 0 16px;
+}
