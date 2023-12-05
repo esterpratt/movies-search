@@ -10,5 +10,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ## Used libraries
 
 In this project I used:\
-@tanstack/react-table for the table logic
+@tanstack/react-table for the table logic\
 @tanstack/react-query for api request
