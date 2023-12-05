@@ -1,3 +1,4 @@
+import { QueryFunctionContext } from 'react-query';
 import { MoviesRes, Movies } from '../types/Movies';
 const url = 'https://jsonmock.hackerrank.com/api/movies/search/';
 
@@ -12,14 +13,18 @@ function adaptMovies(moviesRes: MoviesRes): Movies {
   };
 }
 
-async function getMoviesApi(title: string, page?: number) {
-  try {
-    const res = await fetch(`${url}?Title=${title}&page=${page ?? 1}`);
-    const movies = await res.json();
-    return adaptMovies(movies);
-  } catch (e) {
-    return null;
+async function getMovies({
+  queryKey,
+}: QueryFunctionContext<
+  [string, { title: string; page: number | undefined }]
+>) {
+  const [_key, { title, page }] = queryKey;
+  const res = await fetch(`${url}?Title=${title}&page=${page ?? 1}`);
+  if (!res.ok) {
+    throw new Error(`Error while fetching data from ${url}`);
   }
+  const movies = await res.json();
+  return adaptMovies(movies);
 }
 
-export { getMoviesApi };
+export { getMovies };

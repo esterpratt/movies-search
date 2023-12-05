@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useQuery } from 'react-query';
 import { Table } from '../../components/Table';
 import { Pagination } from '../../components/Pagination';
 import { SearchInput } from '../../components/SearchInput';
-import { getMoviesApi } from '../../api/getMovies';
-import { Movies as MoviesType } from '../../types/Movies';
+import { getMovies } from '../../api/getMovies';
 import styles from './Movies.module.scss';
 
 const columns = [
@@ -18,26 +18,22 @@ const columns = [
 ];
 
 function Movies() {
-  const [movies, setMovies] = useState<MoviesType | null>(null);
   const [title, setTitle] = useState('');
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    async function getMovies() {
-      if (!title) {
-        setMovies(null);
-      } else {
-        const res = await getMoviesApi(title, page);
-        setMovies(res);
-      }
-    }
-
-    getMovies();
-  }, [title, page]);
+  const {
+    isLoading,
+    isError,
+    data: movies,
+  } = useQuery({
+    queryKey: ['movies', { title, page }],
+    queryFn: getMovies,
+    enabled: !!title,
+  });
 
   function onSearch(text: string) {
-    setTitle(text);
     setPage(1);
+    setTitle(text);
   }
 
   const onClickPagination = useCallback((num: number) => {
@@ -48,6 +44,12 @@ function Movies() {
     <div>
       <p className={styles.searchText}>Search for any movie you like:</p>
       <SearchInput placeholder="Type movie name..." onClick={onSearch} />
+      {isLoading && <div className={styles.loading}>Loading...</div>}
+      {isError && (
+        <div className={styles.error}>
+          Sorry there was in issue... Please try again
+        </div>
+      )}
       {movies && movies.data.length === 0 && <div>No Movies Found</div>}
       {movies && movies.data.length > 0 && (
         <div className={styles.tableContainer}>
